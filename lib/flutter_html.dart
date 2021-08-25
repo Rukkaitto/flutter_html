@@ -221,8 +221,9 @@ class SelectableHtml extends StatelessWidget {
     this.shrinkWrap = false,
     this.style = const {},
     this.tagsList = const [],
-    this.selectionControls
-  }) : document = null,
+    this.selectionControls,
+    this.toolbarOptions,
+  })  : document = null,
         assert(data != null),
         _anchorKey = anchorKey ?? GlobalKey(),
         super(key: key);
@@ -237,8 +238,9 @@ class SelectableHtml extends StatelessWidget {
     this.shrinkWrap = false,
     this.style = const {},
     this.tagsList = const [],
-    this.selectionControls
-  }) : data = null,
+    this.selectionControls,
+    this.toolbarOptions,
+  })  : data = null,
         assert(document != null),
         _anchorKey = anchorKey ?? GlobalKey(),
         super(key: key);
@@ -276,11 +278,14 @@ class SelectableHtml extends StatelessWidget {
   /// options
   final TextSelectionControls? selectionControls;
 
+  final ToolbarOptions? toolbarOptions;
+
   static List<String> get tags => new List<String>.from(SELECTABLE_ELEMENTS);
 
   @override
   Widget build(BuildContext context) {
-    final dom.Document doc = data != null ? HtmlParser.parseHTML(data!) : document!;
+    final dom.Document doc =
+        data != null ? HtmlParser.parseHTML(data!) : document!;
     final double? width = shrinkWrap ? null : MediaQuery.of(context).size.width;
 
     return Container(
@@ -302,6 +307,7 @@ class SelectableHtml extends StatelessWidget {
         tagsList: tagsList.isEmpty ? SelectableHtml.tags : tagsList,
         navigationDelegateForIframe: null,
         selectionControls: selectionControls,
+        toolbarOptions: toolbarOptions,
       ),
     );
   }
